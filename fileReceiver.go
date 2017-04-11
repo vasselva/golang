@@ -52,7 +52,9 @@ func sendFileToClient(connection net.Conn) {
 	//Strip the ':' once again but from the received file name now
 	fileName := strings.Trim(string(bufferFileName), ":")
 	//Create a new file to write in
-	return if fileName == ""
+	if fileName == "" {
+		return
+	}
 	newFile, err := os.Create(filePath + "/" + fileName)
 	if err != nil {
 		panic(err)

@@ -43,11 +43,11 @@ func main() {
 	fmt.Println(fileName)
 	fmt.Println(filePath)
 	//Write first 10 bytes to client telling them the filesize
+	connection.Write([]byte(filePath))
 	connection.Write([]byte(fileSize))
 	//Write 64 bytes to client containing the filename
 	connection.Write([]byte(fileName))
-	connection.Write([]byte(filePath))
-	//Initialize a buffer for reading parts of the file in
+		//Initialize a buffer for reading parts of the file in
 	sendBuffer := make([]byte, BUFFERSIZE)
 	//Start sending the file to the client
 	fmt.Println("Start sending file!")

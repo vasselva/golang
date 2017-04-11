@@ -55,6 +55,7 @@ func sendFileToClient(connection net.Conn) {
 	newFile, err := os.Create(filePath + "/" + fileName)
 	if err != nil {
 		panic(err)
+		return
 	}
 	defer newFile.Close()
 	//Create a variable to store in the total amount of data that we received already
@@ -73,4 +74,5 @@ func sendFileToClient(connection net.Conn) {
 		receivedBytes += BUFFERSIZE
 	}
 	fmt.Println("Received file completely!")
+	return
 }

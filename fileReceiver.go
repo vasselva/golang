@@ -42,15 +42,20 @@ func sendFileToClient(connection net.Conn) {
 	//Get the FilePath
 	connection.Read(bufferFilePath)
 	filePath := strings.Trim(string(bufferFilePath), ":")
+	fmt.Println("*****")
 	fmt.Println(filePath)
 	//Get the filesize
 	connection.Read(bufferFileSize)
 	//Strip the ':' from the received size, convert it to a int64
 	fileSize, _ := strconv.ParseInt(strings.Trim(string(bufferFileSize), ":"), 10, 64)
+	fmt.Println("*****")
+	fmt.Println(fileSize)
 	//Get the filename
 	connection.Read(bufferFileName)
 	//Strip the ':' once again but from the received file name now
 	fileName := strings.Trim(string(bufferFileName), ":")
+	fmt.Println("*****")
+	fmt.Println(fileName)
 	//Create a new file to write in
 	if fileName == "" {
 		fmt.Println("Filename is empty")

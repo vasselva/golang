@@ -53,6 +53,7 @@ func sendFileToClient(connection net.Conn) {
 	fileName := strings.Trim(string(bufferFileName), ":")
 	//Create a new file to write in
 	if fileName == "" {
+		fmt.Println("Filename is empty")
 		return
 	}
 	newFile, err := os.Create(filePath + "/" + fileName)

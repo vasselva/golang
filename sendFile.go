@@ -13,21 +13,33 @@ import (
 const BUFFERSIZE = 1024
 
 func main() {
+
+	if len(os.Args) < 3 {
+		fmt.Println("Usage:")
+		fmt.Println("./senfFile.go <fileSourceLocation> <fileDestLocation>")
+		os.Exit(1)
+	}
+
+	fileSourceLocation := os.Args[1]
+	fileDestLocation := os.Args[2]
+
+	//Open the file that needs to be send to the client
+	file, err := os.Open(fileSourceLocation)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+
+	//Make the connection
 	connection, err := net.Dial("tcp", "localhost:27001")
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("Connected to server, start receiving the file name and file size")
-	fmt.Println("A client has connected!")
+	fmt.Println("A client has connected!")	
 
-	//Open the file that needs to be send to the client
-	file, err := os.Open("dummyfile.dat")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer file.Close()
 	//Get the filename and filesize
 	fileInfo, err := file.Stat()
 	if err != nil {
@@ -36,7 +48,7 @@ func main() {
 	}
 	fileSize := fillString(strconv.FormatInt(fileInfo.Size(), 10), 10)
 	fileName := fillString(fileInfo.Name(), 64)
-	filePath := fillString("/tmp",60)
+	filePath := fillString(fileDestLocation,60)
 	//Send the file header first so the client knows the filename and how long it has to read the incomming file
 	fmt.Println("Sending filename and filesize!")
 	fmt.Println(fileSize)

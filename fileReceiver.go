@@ -35,6 +35,12 @@ func main() {
 func sendFileToClient(connection net.Conn) {
 	fmt.Println("A client has connected!")
 	defer connection.Close()
+	//recover function
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("Recovered from failure", r)
+        }
+    }()		
 	//Create buffer to read in the name and size of the file
 	bufferFileName := make([]byte, 64)
 	bufferFileSize := make([]byte, 10)
@@ -55,7 +61,7 @@ func sendFileToClient(connection net.Conn) {
 	//Strip the ':' once again but from the received file name now
 	fileName := strings.Trim(string(bufferFileName), ":")
 	fmt.Println("*****")
-	fmt.Println(fileName)
+	fmt.Println(len(fileName))
 	//Create a new file to write in
 	if fileName == "" {
 		fmt.Println("Filename is empty")

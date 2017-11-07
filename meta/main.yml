@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Vasanth Selvaraj
+  description: Quick and easy golang.
+  company: VasanthCo
+  license: No
+  min_ansible_version: 1.9
+  platforms:
+  - name: EL
+    versions:
+    - all
+  galaxy_tags:
+    - golang
+dependencies:
+  - { }
